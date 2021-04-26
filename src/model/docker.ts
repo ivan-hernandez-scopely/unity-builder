@@ -81,6 +81,7 @@ class Docker {
         --volume "${runnerTempPath}/_github_home":"/root" \
         --volume "${runnerTempPath}/_github_workflow":"/github/workflow" \
         --volume "${workspace}":"/github/workspace" \
+        --volume ~/.ssh:/root/.ssh \
         ${image}`;
 
     await exec(command, undefined, { silent });
