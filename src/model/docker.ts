@@ -21,7 +21,7 @@ class Docker {
     const {
       version,
       workspace,
-      sshAgent
+      sshAgent,
       runnerTempPath,
       platform,
       projectPath,
