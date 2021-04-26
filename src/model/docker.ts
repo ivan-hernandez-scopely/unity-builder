@@ -83,9 +83,9 @@ class Docker {
         --volume "${runnerTempPath}/_github_workflow":"/github/workflow" \
         --volume "${workspace}":"/github/workspace" \
         --volume "${sshAgent}":"/ssh-agent" \
-        --volume "/home/runner/.ssh/known_hosts":"/root/.ssh/known_hosts" \
+        --volume "/home/runner/.ssh":"/root/.ssh" \
         --env SSH_AUTH_SOCK=/ssh-agent \
-        ${image} /bin/bash -c "apt-get update && apt-get --assume-yes install ssh; ssh-add -l && ssh -T git@github.com"`;
+        ${image} /bin/bash -c "apt-get update; apt-get --assume-yes install ssh"`;
 
     await exec(command, undefined, { silent });
   }
