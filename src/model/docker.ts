@@ -82,7 +82,7 @@ class Docker {
         --volume "${runnerTempPath}/_github_workflow":"/github/workflow" \
         --volume "${workspace}":"/github/workspace" \
         --volume "/home/runner/.ssh":"/root/.ssh" \
-        bash -c "sudo apt update && sudo apt install -y openssh-client git" \
+        bash -c "apt update && apt install -y openssh-client git" \
         ${image}`;
 
     await exec(command, undefined, { silent });
