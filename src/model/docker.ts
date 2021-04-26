@@ -81,7 +81,7 @@ class Docker {
         --volume "${runnerTempPath}/_github_home":"/root" \
         --volume "${runnerTempPath}/_github_workflow":"/github/workflow" \
         --volume "${workspace}":"/github/workspace" \
-        --volume ~/.ssh:/root/.ssh \
+        --volume "/home/runner/.ssh":"/root/.ssh" \
         bash -c "sudo apt update && sudo apt install -y openssh-client git" \
         ${image}`;
 
