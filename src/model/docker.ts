@@ -85,7 +85,9 @@ class Docker {
         --volume "${sshAgent}":"/ssh-agent" \
         --volume "/home/runner/.ssh":"/root/.ssh" \
         --env SSH_AUTH_SOCK=/ssh-agent \
-        ${image} /bin/bash -c "apt-get update; apt-get --assume-yes install ssh"`;
+        ${image} \
+        bash -c "apt update && apt install -y openssh-client git; ssh-add -l && ssh -T git@github.com" \
+        `;
 
     await exec(command, undefined, { silent });
   }
