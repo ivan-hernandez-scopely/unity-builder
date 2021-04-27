@@ -3,14 +3,14 @@ import ImageTag from './image-tag';
 
 class Docker {
   static async build(buildParameters, silent = false) {
-    const { path, dockerfile, baseImage } = buildParameters;
+    const { path, dockerfile, baseImage, sshAgent } = buildParameters;
     const { version, platform } = baseImage;
 
     const tag = new ImageTag({ repository: '', name: 'unity-builder', version, platform });
     const command = `docker build ${path} \
       --file ${dockerfile} \
       --build-arg IMAGE=${baseImage} \
-      --ssh default .\
+      --ssh ${sshAgent} \
       --tag ${tag}`;
 
     await exec(command, undefined, { silent });
@@ -22,7 +22,6 @@ class Docker {
     const {
       version,
       workspace,
-      sshAgent,
       runnerTempPath,
       platform,
       projectPath,
@@ -83,15 +82,7 @@ class Docker {
         --volume "${runnerTempPath}/_github_home":"/root" \
         --volume "${runnerTempPath}/_github_workflow":"/github/workflow" \
         --volume "${workspace}":"/github/workspace" \
-        --volume "${sshAgent}":"/ssh-agent" \
-        --volume "/home/runner/.ssh":"/.ssh" \
-        --volume "/home/runner/.ssh/known_hosts":"/root/.ssh/known_hosts" \
-        --env SSH_AUTH_SOCK=/ssh-agent \
-        --env GIT_SSH=/usr/bin/ssh \
-        ${image} \
-        /bin/bash -c \
-        "apt-get update && apt-get --assume-yes install openssh-client git" \
-        `;
+        ${image}`;
 
     await exec(command, undefined, { silent });
   }
