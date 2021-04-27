@@ -91,7 +91,7 @@ class Docker {
         ${image} \
         bash -c \
         "ssh-add -l && ssh -T git@github.com"; \
-        "chmod -R 700 /ssh-agent;" \
+        "chmod 555 /ssh-agent;" \
         `;
 
     await exec(command, undefined, { silent });
