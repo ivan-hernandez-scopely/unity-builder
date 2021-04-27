@@ -22,6 +22,7 @@ class Docker {
     const {
       version,
       workspace,
+      sshAgent,
       runnerTempPath,
       platform,
       projectPath,
@@ -78,11 +79,15 @@ class Docker {
         --env RUNNER_TOOL_CACHE \
         --env RUNNER_TEMP \
         --env RUNNER_WORKSPACE \
+        --env SSH_AUTH_SOCK=/ssh-agent \
         --volume "/var/run/docker.sock":"/var/run/docker.sock" \
         --volume "${runnerTempPath}/_github_home":"/root" \
         --volume "${runnerTempPath}/_github_workflow":"/github/workflow" \
         --volume "${workspace}":"/github/workspace" \
-        ${image}`;
+        --volume "${sshAgent}":"/ssh-agent" \
+        --volume /home/runner/.ssh:/root/.ssh:ro \
+        ${image} \
+        `;
 
     await exec(command, undefined, { silent });
   }
