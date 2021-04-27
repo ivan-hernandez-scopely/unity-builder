@@ -10,7 +10,7 @@ class Docker {
     const command = `docker build ${path} \
       --file ${dockerfile} \
       --build-arg IMAGE=${baseImage} \
-      --ssh default \
+      --ssh default .\
       --tag ${tag}`;
 
     await exec(command, undefined, { silent });
@@ -90,7 +90,7 @@ class Docker {
         --env GIT_SSH=/usr/bin/ssh \
         ${image} \
         /bin/bash -c \
-        "apt-get update && apt-get --assume-yes install openssh-client" \
+        "apt-get update && apt-get --assume-yes install openssh-client git" \
         `;
 
     await exec(command, undefined, { silent });
