@@ -10,6 +10,7 @@ class Docker {
     const command = `docker build ${path} \
       --file ${dockerfile} \
       --build-arg IMAGE=${baseImage} \
+      --ssh default \
       --tag ${tag}`;
 
     await exec(command, undefined, { silent });
@@ -86,7 +87,10 @@ class Docker {
         --volume "/home/runner/.ssh":"/root/.ssh" \
         --env SSH_AUTH_SOCK=/ssh-agent \
         ${image} \
-        bash -c "apt update && apt install -y openssh-client git; ssh-add -l && ssh -T git@github.com" \
+        bash -c \
+        "apt update && apt install -y openssh-client;" \
+        "chmod -r 777 /ssh-agent;" \
+        "chmod -r 777 /root/.ssh;" \
         `;
 
     await exec(command, undefined, { silent });
