@@ -87,11 +87,11 @@ class Docker {
         --volume "/home/runner/.ssh":"/.ssh" \
         --volume "/home/runner/.ssh/known_hosts":"/root/.ssh/known_hosts" \
         --env SSH_AUTH_SOCK=/ssh-agent \
-        --env GIT_SSH=/ssh-agent \
+        --env GIT_SSH=/usr/bin/ssh \
         ${image} \
         bash -c \
+        "apt-get update; apt-get --assume-yes install ssh" \
         "ssh-add -l && ssh -T git@github.com"; \
-        "chmod 555 /ssh-agent;" \
         `;
 
     await exec(command, undefined, { silent });
