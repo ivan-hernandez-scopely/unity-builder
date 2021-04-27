@@ -84,13 +84,14 @@ class Docker {
         --volume "${runnerTempPath}/_github_workflow":"/github/workflow" \
         --volume "${workspace}":"/github/workspace" \
         --volume "${sshAgent}":"/ssh-agent" \
-        --volume "/home/runner/.ssh":"/root/.ssh" \
+        --volume "/home/runner/.ssh/known_hosts":"/root/.ssh/known_hosts" \
         --env SSH_AUTH_SOCK=/ssh-agent \
         ${image} \
         bash -c \
         "apt update && apt install -y openssh-client;" \
-        "chmod -r 777 /ssh-agent;" \
-        "chmod -r 777 /root/.ssh;" \
+        "chmod -R 700 /ssh-agent;" \
+        "chmod -R 700 /root;" \
+        "chmod -R 700 /github;" \
         `;
 
     await exec(command, undefined, { silent });
