@@ -86,7 +86,8 @@ class Docker {
         --volume "${runnerTempPath}/_github_workflow":"/github/workflow" \
         --volume "${workspace}":"/github/workspace" \
         --volume "${sshAgent}":"/ssh-agent" \
-        --volume /home/runner/.ssh:/root/.ssh:ro \
+        --volume /home/runner/.ssh:/root/.ssh \
+        --volume /home/runner/.ssh/known_hosts:/root/.ssh/known_hosts \
         ${image} \
         `;
 
