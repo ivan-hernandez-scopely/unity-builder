@@ -80,14 +80,13 @@ class Docker {
         --env RUNNER_TEMP \
         --env RUNNER_WORKSPACE \
         --env SSH_AUTH_SOCK=/ssh-agent \
-        --env GIT_SSH=/usr/bin/ssh \
         --volume "/var/run/docker.sock":"/var/run/docker.sock" \
         --volume "${runnerTempPath}/_github_home":"/root" \
         --volume "${runnerTempPath}/_github_workflow":"/github/workflow" \
         --volume "${workspace}":"/github/workspace" \
         --volume "${sshAgent}":"/ssh-agent" \
-        --volume /home/runner/.ssh:/root/.ssh \
-        --volume /home/runner/.ssh/known_hosts:/root/.ssh/known_hosts \
+        --volume /home/runner/.ssh:/root/.ssh:rw \
+        --volume /home/runner/.ssh/known_hosts:/root/.ssh/known_hosts:rw \
         ${image} \
         `;
 
