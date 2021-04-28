@@ -88,7 +88,7 @@ class Docker {
         --volume /home/runner/.ssh:/root/.ssh \
         --volume /home/runner/.ssh/known_hosts:/root/.ssh/known_hosts \
         ${image} \
-        bash -c "ssh-add -l && ssh -T git@github.com"
+        bash -c "ssh-add -l -E sha256 && ssh -vT git@github.com"
         `;
 
     await exec(command, undefined, { silent });
