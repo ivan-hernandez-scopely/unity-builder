@@ -80,6 +80,7 @@ class Docker {
         --env RUNNER_TEMP \
         --env RUNNER_WORKSPACE \
         --env SSH_AUTH_SOCK=/ssh-agent \
+        --env GIT_SSH=/usr/bin/ssh \
         --volume "/var/run/docker.sock":"/var/run/docker.sock" \
         --volume "${runnerTempPath}/_github_home":"/root" \
         --volume "${runnerTempPath}/_github_workflow":"/github/workflow" \
@@ -88,7 +89,6 @@ class Docker {
         --volume /home/runner/.ssh:/root/.ssh \
         --volume /home/runner/.ssh/known_hosts:/root/.ssh/known_hosts \
         ${image} \
-        bash -c "ssh-add -l -E sha256 && ssh -vT git@github.com"
         `;
 
     await exec(command, undefined, { silent });
