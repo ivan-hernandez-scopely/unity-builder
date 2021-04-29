@@ -3,7 +3,7 @@ import ImageTag from './image-tag';
 
 class Docker {
   static async build(buildParameters, silent = false) {
-    const { path, dockerfile, baseImage, sshAgent } = buildParameters;
+    const { path, dockerfile, baseImage } = buildParameters;
     const { version, platform } = baseImage;
 
     const tag = new ImageTag({ repository: '', name: 'unity-builder', version, platform });
@@ -21,7 +21,6 @@ class Docker {
     const {
       version,
       workspace,
-      sshAgent,
       runnerTempPath,
       platform,
       projectPath,
@@ -37,6 +36,7 @@ class Docker {
       androidKeyaliasName,
       androidKeyaliasPass,
       customParameters,
+      sshAgent,
     } = parameters;
 
     const command = `docker run \

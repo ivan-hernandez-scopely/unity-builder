@@ -26,7 +26,7 @@ async function run() {
       // default and local case
       default:
         core.info('Building locally');
-        builtImage = await Docker.build({ path: actionFolder, dockerfile, baseImage, sshAgent });
+        builtImage = await Docker.build({ path: actionFolder, dockerfile, baseImage });
         await Docker.run(builtImage, { workspace, sshAgent, ...buildParameters });
         break;
     }
