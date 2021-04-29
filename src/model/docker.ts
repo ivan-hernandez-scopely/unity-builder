@@ -10,7 +10,6 @@ class Docker {
     const command = `docker build ${path} \
       --file ${dockerfile} \
       --build-arg IMAGE=${baseImage} \
-      --ssh ${sshAgent} \
       --tag ${tag}`;
 
     await exec(command, undefined, { silent });
@@ -79,17 +78,11 @@ class Docker {
         --env RUNNER_TOOL_CACHE \
         --env RUNNER_TEMP \
         --env RUNNER_WORKSPACE \
-        --env SSH_AUTH_SOCK=/ssh-agent \
-        --env GIT_SSH_COMMAND="ssh -A" \
         --volume "/var/run/docker.sock":"/var/run/docker.sock" \
         --volume "${runnerTempPath}/_github_home":"/root" \
         --volume "${runnerTempPath}/_github_workflow":"/github/workflow" \
         --volume "${workspace}":"/github/workspace" \
-        --volume "${sshAgent}":"/ssh-agent" \
-        --volume /home/runner/.ssh:/root/.ssh:rw \
-        --volume /home/runner/.ssh/known_hosts:/root/.ssh/known_hosts:rw \
-        ${image} \
-        `;
+        ${image}`;
 
     await exec(command, undefined, { silent });
   }
