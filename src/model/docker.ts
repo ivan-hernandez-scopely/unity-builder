@@ -78,10 +78,13 @@ class Docker {
         --env RUNNER_TOOL_CACHE \
         --env RUNNER_TEMP \
         --env RUNNER_WORKSPACE \
+        --env SSH_AUTH_SOCK=/ssh-agent \
         --volume "/var/run/docker.sock":"/var/run/docker.sock" \
         --volume "${runnerTempPath}/_github_home":"/root" \
         --volume "${runnerTempPath}/_github_workflow":"/github/workflow" \
         --volume "${workspace}":"/github/workspace" \
+        --volume "${sshAgent}":"/ssh-agent" \
+        --volume /home/runner/.ssh/known_hosts:/root/.ssh/known_hosts:ro \
         ${image}`;
 
     await exec(command, undefined, { silent });
